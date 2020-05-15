@@ -30,6 +30,7 @@ html {
     background-position: center;
     background-size: cover;
     background-repeat: repeat-x;
+    background-attachment: fixed;
     @include phone {
         background-image: url('../images/bg-mobile.png');
     }
