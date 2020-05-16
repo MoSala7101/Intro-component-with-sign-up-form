@@ -1,6 +1,7 @@
 /* Validation flag */
 var valid = 0;
 var pass_valid = 0;
+var email_valid = 0;
 
 /* Form validation */
 $('.submit').click(function() {
@@ -26,11 +27,13 @@ $('.submit').click(function() {
 
             $(this).addClass('input-error');
             $(this).parent().find('.invalid-email-message').removeClass('hidden');
+            $(this).parent().find('.input-error-message').addClass('hidden');
         } else {
 
             $(this).removeClass('input-error');
             $(this).parent().find('.input-error-message').addClass('hidden');
-            valid = 1;
+            $(this).parent().find('.invalid-email-message').removeClass('hidden');
+            email_valid = 1;
         }
 
     });
@@ -48,7 +51,7 @@ $('.submit').click(function() {
         }
     })
 
-    if (valid == 1 && pass_valid == 1) {
+    if (valid == 1 && pass_valid == 1 && email_valid == 1) {
         $('.container').addClass('hidden');
         $('.thanks-container').removeClass('hidden');
         $('.thanks-container').addClass('animated bounceInUp');
@@ -78,15 +81,27 @@ $('.input[type="text"]').each(function() {
 $('.input[type="email"]').each(function() {
     $(this).keyup(function() {
 
-        if (isEmail($(this).val())) {
+        if ($(this).val() == '') {
 
 
-            $(this).removeClass('input-error');
+            /* show empty field error message */
+            $(this).parent().find('.input-error-message').removeClass('hidden');
+            $(this).parent().find('.invalid-email-message').addClass('hidden');
+            $(this).addClass('input-error');
+
+
+        } else if (!isEmail($(this).val())) {
+
+            /* show invalid email error message */
+            $(this).parent().find('.invalid-email-message').removeClass('hidden');
             $(this).parent().find('.input-error-message').addClass('hidden');
+            $(this).addClass('input-error');
+
         } else {
 
-            $(this).addClass('input-error');
-            $(this).parent().find('.input-error-message').removeClass('hidden');
+            $(this).removeClass('input-error');
+            $(this).parent().find('.invalid-email-message').addClass('hidden');
+            $(this).parent().find('.input-error-message').addClass('hidden');
         }
     })
 });
